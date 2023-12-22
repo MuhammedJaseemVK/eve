@@ -1,9 +1,12 @@
-import './App.css';
+import React, { useState } from 'react';
+import Map from './components/Map';
 
 function App() {
-  return (
-    <h1 className="text-yellow-500">hello world</h1>
-  );
+  const [selectedLocation, setSelectedLocation] = useState({
+    lat:28.7041,
+    lng:77.1025
+  })
+  return (<Map selectedLocation={selectedLocation} />);
 }
 
 export default App;
