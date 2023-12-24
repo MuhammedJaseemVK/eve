@@ -1,12 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Register from './pages/Register';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Login from './pages/Login';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 import Map from './components/Map';
+import { useSelector } from "react-redux"
+import Spinner from "./components/Spinner";
 
 function App() {
-  const [selectedLocation, setSelectedLocation] = useState({
-    lat:28.7041,
-    lng:77.1025
-  })
-  return (<Map selectedLocation={selectedLocation} />);
+  const { loading } = useSelector(state => state.alerts)
+  return (
+    <div className='h-screen'>
+      <BrowserRouter>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <ToastContainer />
+            <Routes>
+              <Route path='/' element={
+                <ProtectedRoute>
+                  <Map />
+                </ProtectedRoute>} />
+              <Route path='/register' element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>} />
+              <Route path='/login' element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>} />
+              <Route path='/login' element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>} />
+            </Routes>
+          </>
+        )}
+      </BrowserRouter>
+    </div>
+  )
 }
 
-export default App;
+export default App
