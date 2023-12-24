@@ -9,6 +9,7 @@ import PublicRoute from './components/PublicRoute';
 import Map from './components/Map';
 import { useSelector } from "react-redux"
 import Spinner from "./components/Spinner";
+import Home from './pages/Home';
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -23,7 +24,7 @@ function App() {
             <Routes>
               <Route path='/' element={
                 <ProtectedRoute>
-                  <Map />
+                  <Home />
                 </ProtectedRoute>} />
               <Route path='/register' element={
                 <PublicRoute>

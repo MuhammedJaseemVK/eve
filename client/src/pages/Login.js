@@ -10,19 +10,20 @@ function Login() {
         email: '',
         password: ''
     });
-    const navigate=useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
     }
     const handleSubmit = async (e) => {
-        try{
+        try {
             e.preventDefault();
             dispatch(showLoading());
             const res = await axios.post('/api/v1/user/login', input);
             dispatch(hideLoading());
             if (res.data.success) {
                 toast.success("User logged in");
-                localStorage.setItem('token',res.data.token);
+                localStorage.setItem('token', res.data.token);
                 navigate('/');
             }
             else {
@@ -30,9 +31,9 @@ function Login() {
                 console.log(res.data.message);
             }
         }
-        catch(error){
+        catch (error) {
             dispatch(hideLoading());
-            toast.error(res.data.message);
+            toast.error("Something went wrong");
             console.log(error);
         }
     }
@@ -49,7 +50,7 @@ function Login() {
                 </div>
                 <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Login</button>
             </form>
-                <Link to='/register' className='mt-3'>Don't have an account? Signup</Link>
+            <Link to='/register' className='mt-3'>Don't have an account? Signup</Link>
         </div>
     )
 }

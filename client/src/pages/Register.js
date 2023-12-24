@@ -11,6 +11,7 @@ function Register() {
         email: '',
         password: ''
     });
+    const dispatch=useDispatch();
     const navigate=useNavigate();
     const handleChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
@@ -32,7 +33,7 @@ function Register() {
         }
         catch(error){
             dispatch(hideLoading());
-            toast.error(res.data.message);
+            toast.error("Something went wrong");
             console.log(error);
         }
     }

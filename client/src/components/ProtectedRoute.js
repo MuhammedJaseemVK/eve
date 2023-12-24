@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading, showLoading } from '../redux/features/alertSlice';
+import { setUser } from '../redux/features/userSlice';
 
 function ProtectedRoute({ children }) {
 
@@ -12,14 +13,14 @@ function ProtectedRoute({ children }) {
     const getUser = async () => {
         try {
             dispatch(showLoading());
-            const res = await axios.get('/api/v1/user/get-user-data', {
+            const res = await axios.get('/api/v1/user/get-user-info', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             });
             dispatch(hideLoading());
             if (res.data.success) {
-
+                dispatch(setUser(res.data.user));
             }
             else {
                 localStorage.clear();
@@ -37,7 +38,8 @@ function ProtectedRoute({ children }) {
         if (!user) {
             getUser();
         }
-    }, [user, getUser])
+    }, [user, getUser]);
+
     if (localStorage.getItem('token')) {
         return children
     }
